@@ -21,7 +21,7 @@ public class ListaAlunosActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setTitle("Lista de Alunos!");
+        setTitle("Lista de Alunos 2021!");
         setContentView(R.layout.activity_lista_alunos);
 
          FloatingActionButton x = findViewById(R.id.activity_lista_alunos_fab_novo_aluno);
