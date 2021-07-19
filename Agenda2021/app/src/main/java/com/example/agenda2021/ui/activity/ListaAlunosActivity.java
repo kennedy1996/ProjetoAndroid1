@@ -30,7 +30,8 @@ public class ListaAlunosActivity extends AppCompatActivity {
         x.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(ListaAlunosActivity.this, FormularioAlunoActivity.class));
+                startActivity(new Intent(ListaAlunosActivity.this,
+                        FormularioAlunoActivity.class));
 
             }
         });
