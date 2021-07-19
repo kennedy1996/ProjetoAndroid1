@@ -1,13 +1,12 @@
 package com.example.agenda2021.ui.activity;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.agenda2021.R;
 import com.example.agenda2021.dao.AlunoDAO;
@@ -15,31 +14,54 @@ import com.example.agenda2021.model.Aluno;
 
 public class FormularioAlunoActivity extends AppCompatActivity {
 
+    public static final String TITULO_APPBAR = "Novo Aluno";
+    private EditText campoNome;
+    private EditText campoTelefone;
+    private EditText campoEmail;
+    AlunoDAO dao = new AlunoDAO();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_formulario_aluno);
 
-        AlunoDAO dao = new AlunoDAO();
+        setTitle(TITULO_APPBAR);
+        inicializacaoDosCampos();
+        configuraBotaoSalvar();
+    }
 
-        final EditText campoNome = findViewById(R.id.activity_formulario_aluno_nome);
-        final EditText campoTelefone = findViewById(R.id.activity_formulario_aluno_telefone);
-        final EditText campoEmail = findViewById(R.id.activity_formulario_aluno_email);
-
+    private void configuraBotaoSalvar() {
         Button botaoSalvar = findViewById(R.id.activity_formulario_aluno_botao_salvar);
-
         botaoSalvar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String nome = campoNome.getText().toString();
-                String telefone = campoTelefone.getText().toString();
-                String email = campoEmail.getText().toString();
-
-                Aluno alunoCriado = new Aluno(nome, telefone, email);
-                dao.salva(alunoCriado);
+                Aluno alunoCriado = criaAluno();
+                salvaAluno(alunoCriado);
+                //Após Salvar, enviar para a tela de Listagem de Alunos
                 startActivity(new Intent(FormularioAlunoActivity.this,
                         ListaAlunosActivity.class));
             }
         });
+    }
+
+    private void inicializacaoDosCampos() {
+        campoNome = findViewById(R.id.activity_formulario_aluno_nome);
+        campoTelefone = findViewById(R.id.activity_formulario_aluno_telefone);
+        campoEmail = findViewById(R.id.activity_formulario_aluno_email);
+    }
+
+    private void salvaAluno(Aluno aluno) {
+        dao.salva(aluno);
+    }
+
+
+    private Aluno criaAluno() {
+        String nome = campoNome.getText().toString();
+        String telefone = campoTelefone.getText().toString();
+        String email = campoEmail.getText().toString();
+
+        Aluno alunoCriado = new Aluno(nome, telefone, email);
+        return alunoCriado;
     }
 }

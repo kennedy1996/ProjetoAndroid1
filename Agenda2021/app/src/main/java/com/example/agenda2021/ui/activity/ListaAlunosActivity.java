@@ -1,48 +1,30 @@
 package com.example.agenda2021.ui.activity;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.agenda2021.R;
 import com.example.agenda2021.dao.AlunoDAO;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
 public class ListaAlunosActivity extends AppCompatActivity {
+
+    public static final String TITULO_APPBAR = "Lista de Alunos 2021!";
+    private AlunoDAO dao = new AlunoDAO();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
-        setTitle("Lista de Alunos 2021!");
+        setTitle(TITULO_APPBAR);
         setContentView(R.layout.activity_lista_alunos);
-
-         FloatingActionButton x = findViewById(R.id.activity_lista_alunos_fab_novo_aluno);
-
-        // FloatingActionButton botaoNovoAluno = findViewById(R.id.activity_lista_alunos_fab_novo_aluno);
-        x.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(ListaAlunosActivity.this,
-                        FormularioAlunoActivity.class));
-
-            }
-        });
-
-        AlunoDAO dao = new AlunoDAO();
-
-
-        ListView listaDeAlunos = findViewById(R.id.activity_main_lista_alunos_listview);
-        listaDeAlunos.setAdapter(new ArrayAdapter<>(
-                this, android.R.layout.simple_list_item_1,
-                dao.todos()));
+        configuraFabNovoAluno();
+        configuraLista();
 
        /*
 
@@ -69,5 +51,28 @@ public class ListaAlunosActivity extends AppCompatActivity {
        TextView segundoAluno = findViewById(R.id.textView6);
 
            */
+    }
+
+    private void configuraLista() {
+        ListView listaDeAlunos = findViewById(R.id.activity_main_lista_alunos_listview);
+        listaDeAlunos.setAdapter(new ArrayAdapter<>(
+                this, android.R.layout.simple_list_item_1,
+                dao.todos()));
+    }
+
+    private void configuraFabNovoAluno() {
+        FloatingActionButton x = findViewById(R.id.activity_lista_alunos_fab_novo_aluno);
+
+        x.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                abreFormularioAlunoActivity();
+
+            }
+        });
+    }
+
+    private void abreFormularioAlunoActivity() {
+        startActivity(new Intent(this, FormularioAlunoActivity.class));
     }
 }
