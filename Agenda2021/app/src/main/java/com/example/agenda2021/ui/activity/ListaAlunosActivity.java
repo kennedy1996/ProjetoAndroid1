@@ -8,6 +8,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.agenda2021.R;
@@ -23,14 +24,14 @@ public class ListaAlunosActivity extends AppCompatActivity {
     private AlunoDAO dao = new AlunoDAO();
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-        setTitle(TITULO_APPBAR);
         setContentView(R.layout.activity_lista_alunos);
+        setTitle(TITULO_APPBAR);
         configuraFabNovoAluno();
         dao.salva(new Aluno("Fran", "1122223333", "fran@gmail.com"));
-        configuraLista();
+        //configuraLista();
 
 
        /*
@@ -62,7 +63,7 @@ public class ListaAlunosActivity extends AppCompatActivity {
 
     private void configuraLista() {
         ListView listaDeAlunos = findViewById(R.id.activity_main_lista_alunos_listview);
-        List<Aluno> alunos = dao.todos();
+        final List<Aluno> alunos = dao.todos();
         listaDeAlunos.setAdapter(new ArrayAdapter<>(
                 this, android.R.layout.simple_list_item_1,
                 alunos));
@@ -77,6 +78,12 @@ public class ListaAlunosActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    @Override
+    protected void onResume(){
+        super.onResume();
+        configuraLista();
     }
 
     private void configuraFabNovoAluno() {
