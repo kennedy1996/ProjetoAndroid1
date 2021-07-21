@@ -12,6 +12,8 @@ import com.example.agenda2021.R;
 import com.example.agenda2021.dao.AlunoDAO;
 import com.example.agenda2021.model.Aluno;
 
+import java.io.Serializable;
+
 public class FormularioAlunoActivity extends AppCompatActivity {
 
     public static final String TITULO_APPBAR = "Novo Aluno";
@@ -29,6 +31,14 @@ public class FormularioAlunoActivity extends AppCompatActivity {
         setTitle(TITULO_APPBAR);
         inicializacaoDosCampos();
         configuraBotaoSalvar();
+
+        Intent dados = getIntent();
+        Aluno aluno = (Aluno) dados.getSerializableExtra("aluno");
+
+        campoNome.setText(aluno.getNome());
+        campoTelefone.setText(aluno.getTelefone());
+        campoEmail.setText(aluno.getEmail());
+
     }
 
     private void configuraBotaoSalvar() {
