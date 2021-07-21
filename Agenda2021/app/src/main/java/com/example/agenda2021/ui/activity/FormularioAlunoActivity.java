@@ -15,9 +15,12 @@ import com.example.agenda2021.model.Aluno;
 
 import java.io.Serializable;
 
+import static com.example.agenda2021.ui.activity.ConstantesActivities.CHAVE_ALUNO;
+
 public class FormularioAlunoActivity extends AppCompatActivity {
 
-    public static final String TITULO_APPBAR = "Novo Aluno";
+    private static final String TITULO_APPBAR_NOVO_ALUNO = "Novo Aluno";
+    private static final String TITULO_APPBAR_EDITA_ALUNO = "Edita Aluno";
     private EditText campoNome;
     private EditText campoTelefone;
     private EditText campoEmail;
@@ -30,20 +33,30 @@ public class FormularioAlunoActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_formulario_aluno);
 
-        setTitle(TITULO_APPBAR);
+
         inicializacaoDosCampos();
         configuraBotaoSalvar();
 
+        carregaAluno();
+
+    }
+
+    private void carregaAluno() {
         Intent dados = getIntent();
-        if(dados.hasExtra("aluno")){
-            aluno = (Aluno) dados.getSerializableExtra("aluno");
-            campoNome.setText(aluno.getNome());
-            campoTelefone.setText(aluno.getTelefone());
-            campoEmail.setText(aluno.getEmail());
+        if(dados.hasExtra(CHAVE_ALUNO)){
+            setTitle(TITULO_APPBAR_EDITA_ALUNO);
+            aluno = (Aluno) dados.getSerializableExtra(CHAVE_ALUNO);
+            preencheCampos();
         } else {
+            setTitle(TITULO_APPBAR_NOVO_ALUNO);
             aluno = new Aluno();
         }
+    }
 
+    public void preencheCampos() {
+        campoNome.setText(aluno.getNome());
+        campoTelefone.setText(aluno.getTelefone());
+        campoEmail.setText(aluno.getEmail());
     }
 
     private void configuraBotaoSalvar() {
@@ -56,17 +69,21 @@ public class FormularioAlunoActivity extends AppCompatActivity {
                 //Após Salvar, enviar para a tela de Listagem de Alunos
 //                startActivity(new Intent(FormularioAlunoActivity.this,
 //                        ListaAlunosActivity.class));
-                preencheAluno();
-                if (aluno.temIdValido()){
-                    dao.edita(aluno);
-                }
-                else {
-                    dao.salva(aluno);
-                }
-                Log.i("teste", "passou por aqui" + aluno);
-                finish();
+                finalizaFormulario();
             }
         });
+    }
+
+    private void finalizaFormulario() {
+        preencheAluno();
+        if (aluno.temIdValido()){
+            dao.edita(aluno);
+        }
+        else {
+            dao.salva(aluno);
+        }
+        Log.i("teste", "passou por aqui" + aluno);
+        finish();
     }
 
     private void inicializacaoDosCampos() {
