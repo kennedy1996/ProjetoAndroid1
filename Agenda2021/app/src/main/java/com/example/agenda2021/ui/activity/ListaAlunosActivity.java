@@ -1,5 +1,7 @@
 package com.example.agenda2021.ui.activity;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -8,29 +10,53 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import com.example.agenda2021.R;
 import com.example.agenda2021.dao.AlunoDAO;
 import com.example.agenda2021.model.Aluno;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+<<<<<<< HEAD
 import java.util.List;
 
 public class ListaAlunosActivity extends AppCompatActivity {
+=======
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+>>>>>>> parent of 5924511 (Simplificação de Código)
 
-    public static final String TITULO_APPBAR = "Lista de Alunos 2021!";
-    private AlunoDAO dao = new AlunoDAO();
+public class ListaAlunosActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+<<<<<<< HEAD
 
         dao.salva(new Aluno("Kennedy", "234", "23"));
+=======
+>>>>>>> parent of 5924511 (Simplificação de Código)
         super.onCreate(savedInstanceState);
-        setTitle(TITULO_APPBAR);
+        setTitle("Lista de Alunos 2021!");
         setContentView(R.layout.activity_lista_alunos);
-        configuraFabNovoAluno();
-        configuraLista();
+
+         FloatingActionButton x = findViewById(R.id.activity_lista_alunos_fab_novo_aluno);
+
+        // FloatingActionButton botaoNovoAluno = findViewById(R.id.activity_lista_alunos_fab_novo_aluno);
+        x.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(ListaAlunosActivity.this,
+                        FormularioAlunoActivity.class));
+
+            }
+        });
+
+        AlunoDAO dao = new AlunoDAO();
+
+
+        ListView listaDeAlunos = findViewById(R.id.activity_main_lista_alunos_listview);
+        listaDeAlunos.setAdapter(new ArrayAdapter<>(
+                this, android.R.layout.simple_list_item_1,
+                dao.todos()));
 
        /*
 
@@ -58,6 +84,7 @@ public class ListaAlunosActivity extends AppCompatActivity {
 
            */
     }
+<<<<<<< HEAD
 
     private void configuraLista() {
         ListView listaDeAlunos = findViewById(R.id.activity_main_lista_alunos_listview);
@@ -94,4 +121,6 @@ public class ListaAlunosActivity extends AppCompatActivity {
     private void abreFormularioAlunoActivity() {
         startActivity(new Intent(this, FormularioAlunoActivity.class));
     }
+=======
+>>>>>>> parent of 5924511 (Simplificação de Código)
 }
