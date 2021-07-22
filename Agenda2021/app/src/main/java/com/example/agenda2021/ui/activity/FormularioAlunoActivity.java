@@ -3,10 +3,13 @@ package com.example.agenda2021.ui.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.agenda2021.R;
@@ -35,10 +38,24 @@ public class FormularioAlunoActivity extends AppCompatActivity {
 
 
         inicializacaoDosCampos();
-        configuraBotaoSalvar();
-
         carregaAluno();
 
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.activity_formulario_aluno_menu_salvar, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        int itemId = item.getItemId();
+        if(itemId==R.id.activity_formulario_aluno_menu_salvar){
+            finalizaFormulario();
+
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     private void carregaAluno() {
@@ -57,21 +74,6 @@ public class FormularioAlunoActivity extends AppCompatActivity {
         campoNome.setText(aluno.getNome());
         campoTelefone.setText(aluno.getTelefone());
         campoEmail.setText(aluno.getEmail());
-    }
-
-    private void configuraBotaoSalvar() {
-        Button botaoSalvar = findViewById(R.id.activity_formulario_aluno_botao_salvar);
-        botaoSalvar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-//              Aluno alunoCriado = preencheAluno();
-                // salva(alunoCriado);
-                //Após Salvar, enviar para a tela de Listagem de Alunos
-//                startActivity(new Intent(FormularioAlunoActivity.this,
-//                        ListaAlunosActivity.class));
-                finalizaFormulario();
-            }
-        });
     }
 
     private void finalizaFormulario() {

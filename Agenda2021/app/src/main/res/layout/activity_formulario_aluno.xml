@@ -30,12 +30,5 @@
         android:layout_margin="8dp"
         android:hint="Digite seu E-mail" android:inputType="textWebEmailAddress"
          />
-    <Button
-        android:id="@+id/activity_formulario_aluno_botao_salvar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="8dp"
-        android:text="Salvar"
-        />
 </LinearLayout>
 </ScrollView>
